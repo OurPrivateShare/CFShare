@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cfshare",
+  "main": "src/index.js",
+  "compatibility_date": "2025-10-01",
+  // 静态资源由 Cloudflare 边缘直接返回，不消耗 Worker 请求次数；只有 /api/* 才会唤起 Worker
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cfshare"
+    }
+  ],
+  // 每天一次清理过期验证码、限流记录、旧日志
+  "triggers": {
+    "crons": ["17 19 * * *"]
+  },
+  // 智能放置：让 Worker 靠近 D1 运行，降低数据库往返延迟
+  "placement": {
+    "mode": "smart"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

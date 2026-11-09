@@ -1,0 +1,2 @@
+# 用于加密 Token / 邮箱密码、签名登录会话，并作为首次初始化管理员的密钥（建议 32 位以上随机字符串）
+APP_SECRET=please-change-to-a-long-random-string

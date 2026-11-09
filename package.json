@@ -1,0 +1,25 @@
+{
+  "name": "cfshare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CFShare - 基于 Cloudflare Workers 的二级域名分发平台",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 3000 --ip 0.0.0.0",
+    "deploy": "wrangler deploy",
+    "check": "node --check src/index.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.158.0"
+  },
+  "cloudflare": {
+    "bindings": {
+      "APP_SECRET": {
+        "description": "用于加密敏感数据与签名会话，首次初始化管理员时也需要输入。可使用 `openssl rand -hex 32` 生成，**部署后请勿修改**。"
+      },
+      "DB": {
+        "description": "D1 数据库，部署时自动创建，首次访问自动建表，无需手动迁移。"
+      }
+    }
+  }
+}
